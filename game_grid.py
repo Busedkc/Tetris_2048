@@ -2,6 +2,8 @@ import lib.stddraw as stddraw  # used for displaying the game grid
 from lib.color import Color  # used for coloring the game grid
 from point import Point  # used for tile positions
 import numpy as np  # fundamental Python module for scientific computing
+import random
+from tetromino import Tetromino
 
 # A class for modeling the game grid
 class GameGrid:
@@ -14,17 +16,27 @@ class GameGrid:
       self.tile_matrix = np.full((grid_h, grid_w), None)
       # create the tetromino that is currently being moved on the game grid
       self.current_tetromino = None
+
+      self.next_tetromino = None
+      self.newList = None
+      
       # the game_over flag shows whether the game is over or not
       self.game_over = False
       # set the color used for the empty grid cells
-      self.empty_cell_color = Color(42, 69, 99)
+      self.empty_cell_color = Color(255, 182, 193)
       # set the colors used for the grid lines and the grid boundaries
-      self.line_color = Color(0, 100, 200)
-      self.boundary_color = Color(0, 100, 200)
-      # thickness values used for the grid lines and the grid boundaries
+      self.line_color = Color(128, 128, 0)
+      self.boundary_color = Color(255, 165, 0)
+      # thickness values used for the grid lines and the boundaries
       self.line_thickness = 0.002
-      self.box_thickness = 10 * self.line_thickness
+      self.box_thickness = 7 * self.line_thickness
+      # score
+      self.score = 0
+      # Check reached 2046 to win
+      self.reached2048 = False
+      # to show next tetrominos
 
+      self.speed = 250
    # A method for displaying the game grid
    def display(self):
       # clear the background to empty_cell_color
