@@ -38,7 +38,7 @@ class GameGrid:
 
       self.speed = 250
    # A method for displaying the game grid
-   def display(self):
+   def display(self, pause):
       # clear the background to empty_cell_color
       stddraw.clear(self.empty_cell_color)
       # draw the game grid
@@ -49,8 +49,28 @@ class GameGrid:
          self.current_tetromino.draw()
       # draw a box around the game grid
       self.draw_boundaries()
+      self.shownextTetromino(self.newList)
+      # draw a box around the game grid
+      self.draw_boundaries()
       # show the resulting drawing with a pause duration = 250 ms
-      stddraw.show(250)
+      stddraw.show(self.speed)
+
+      if (pause):
+         stddraw.setPenColor(stddraw.BLACK)
+         stddraw.setFontSize(32)
+         stddraw.text(self.grid_width / 2, self.grid_height / 2, "Game is paused")
+        # show the resulting drawing with a pause duration = 1550 ms
+      stddraw.show(self.speed)
+
+   def slower(self):
+      self.speed = self.speed * 1.5
+
+   def faster(self):
+      self.speed = self.speed / 4
+
+   def shownextTetromino(self, list):
+      stddraw.setPenColor(stddraw.BLACK)
+      list[1].show_next_tetromino()
 
    # A method for drawing the cells and the lines of the game grid
    def draw_grid(self):
