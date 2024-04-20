@@ -149,7 +149,29 @@ class Tetromino:
                 rotated_matrix[n - 1 - col][row] = self.tile_matrix[row][col]
         # Update the tile matrix with the rotated one
         self.tile_matrix = rotated_matrix
+   def show_next_tetromino(self):
+        n = len(self.tile_matrix)
+        copied_tetromino = cp.deepcopy(self)
+        copied_tetromino.bottom_left_cell.x = 13.5
+        copied_tetromino.bottom_left_cell.y = 1.65
+        copied_tetromino.draw()
 
+    def is_valid_rotation(self):
+        # Copy the current tile matrix
+        rotated_matrix = np.copy(self.tile_matrix)
+        # Rotate the copied matrix counterclockwise
+        n = len(self.tile_matrix)
+        for row in range(n):
+            for col in range(n):
+                rotated_matrix[n - 1 - col][row] = self.tile_matrix[row][col]
+        # Check if any part of the rotated matrix exceeds the game grid boundaries
+        for row in range(n):
+            for col in range(n):
+                if rotated_matrix[row][col] is not None:
+                    position = self.get_cell_position(row, col)
+                    if position.x < 0 or position.x >= Tetromino.grid_width or position.y < 0 or position.y >= Tetromino.grid_height:
+                        return False
+        return True
    # A method for checking if this tetromino can be moved in a given direction
    def can_be_moved(self, direction, game_grid):
       n = len(self.tile_matrix)  # n = number of rows = number of columns
