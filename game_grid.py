@@ -194,4 +194,29 @@ class GameGrid:
         for _ in empty_rows:
             self.tile_matrix = np.append(self.tile_matrix, np.full((1, self.grid_width), None), axis=0)
 
+
+    def delete_row(self, row):
+        for i in range(self.grid_width):
+            newScore = self.tile_matrix[row][i].number
+            self.score += newScore
+
+        self.tile_matrix = np.delete(self.tile_matrix, row, axis=0)
+        self.tile_matrix = np.append(self.tile_matrix,
+                                     np.reshape(np.full(self.grid_width, [None]), (-1, self.grid_width)), axis=0)
+
+    def move_row(self, row):
+        for row_i in range(row, self.grid_height):
+            for col_i in range(self.grid_width):
+                if self.tile_matrix[row_i][col_i] is not None:
+                    self.tile_matrix[row_i][col_i].move(0, -1)
+
+    def move_column(self, col, row):
+        for row_i in range(row, self.grid_height):
+            if self.tile_matrix[row_i][col] != None:
+                self.tile_matrix[row_i][col].move(0, -1)
+        transposed = self.tile_matrix.transpose()
+        deleted = np.delete(transposed[col], row)
+        transposed[col] = np.append(deleted, [None], axis=0)
+        self.tile_matrix = transposed.transpose()
+
    
