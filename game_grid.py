@@ -72,26 +72,56 @@ class GameGrid:
       stddraw.setPenColor(stddraw.BLACK)
       list[1].show_next_tetromino()
 
-   # A method for drawing the cells and the lines of the game grid
-   def draw_grid(self):
-      # for each cell of the game grid
-      for row in range(self.grid_height):
-         for col in range(self.grid_width):
-            # if the current grid cell is occupied by a tile
-            if self.tile_matrix[row][col] is not None:
-               # draw this tile
-               self.tile_matrix[row][col].draw(Point(col, row))
-      # draw the inner lines of the game grid
-      stddraw.setPenColor(self.line_color)
-      stddraw.setPenRadius(self.line_thickness)
-      # x and y ranges for the game grid
-      start_x, end_x = -0.5, self.grid_width - 0.5
-      start_y, end_y = -0.5, self.grid_height - 0.5
-      for x in np.arange(start_x + 1, end_x, 1):  # vertical inner lines
-         stddraw.line(x, start_y, x, end_y)
-      for y in np.arange(start_y + 1, end_y, 1):  # horizontal inner lines
-         stddraw.line(start_x, y, end_x, y)
-      stddraw.setPenRadius()  # reset the pen radius to its default value
+
+    # Method for drawing the cells and the lines of the game grid
+    def draw_grid(self):
+        # for each cell of the game grid
+        for row in range(self.grid_height):
+            for col in range(self.grid_width):
+                # draw the tile if the grid cell is occupied by a tile
+                if self.tile_matrix[row][col] is not None:
+                    self.tile_matrix[row][col].draw(Point(col, row))
+        # draw the inner lines of the grid
+        stddraw.setPenColor(self.line_color)
+        stddraw.setPenRadius(self.line_thickness)
+        # x and y ranges for the game grid
+        start_x, end_x = -0.5, self.grid_width - 0.5
+        start_y, end_y = -0.5, self.grid_height - 0.5
+        for x in np.arange(start_x + 1, end_x, 1):  # vertical inner lines
+            stddraw.line(x, start_y, x, end_y)
+        for y in np.arange(start_y + 1, end_y, 1):  # horizontal inner lines
+            stddraw.line(start_x, y, end_x, y)
+        stddraw.setPenRadius()  # reset the pen radius to its default value
+
+        stddraw.setPenColor(self.empty_cell_color)
+        stddraw.filledRectangle(13.5, 3, 5, 4)
+
+        # SCORE
+        stddraw.setFontFamily("Times New Roman")
+        stddraw.setFontSize(20)
+        stddraw.setPenColor(stddraw.WHITE)
+        stddraw.boldText(self.grid_width + 2.3, self.grid_height - 1.5, "SCORE")
+        stddraw.boldText(self.grid_width + 2.45, self.grid_height - 2.5, str(self.score))
+
+        # Controls
+        stddraw.setFontFamily("Times New Roman")
+        stddraw.setFontSize(20)
+        stddraw.setPenColor(stddraw.DARK_GRAY)
+        stddraw.boldText(self.grid_width + 2.4, self.grid_height - 7.8, "MOVEMENTS")
+
+        stddraw.setFontFamily("Times New Roman")
+        stddraw.setFontSize(10)
+        stddraw.boldText(self.grid_width + 2.3, self.grid_height - 8.5, "Press ← to left on")
+        stddraw.boldText(self.grid_width + 2.3, self.grid_height - 9, "Press → to right on")
+        stddraw.boldText(self.grid_width + 2.3, self.grid_height - 11, "Space to drop tetromino")
+        stddraw.boldText(self.grid_width + 2.3, self.grid_height - 9.5, "P to Pause")
+        stddraw.boldText(self.grid_width + 2.3, self.grid_height - 10, "Press ↑ to Rotate (Clockwise)")
+        stddraw.boldText(self.grid_width + 2.3, self.grid_height - 10.5, "Z to Rotate (Anti-Clockwise)")
+
+        stddraw.setFontFamily("Times New Roman")
+        stddraw.setFontSize(20)
+        stddraw.setPenColor(stddraw.WHITE)
+        stddraw.boldText(self.grid_width + 2, self.grid_height - 14.5, "NEXT")
 
    # A method for drawing the boundaries around the game grid
    def draw_boundaries(self):
@@ -145,5 +175,11 @@ class GameGrid:
                # the game is over if any placed tile is above the game grid
                else:
                   self.game_over = True
+      self.merge()
+      self.check_grid()
+      
       # return the value of the game_over flag
       return self.game_over
+
+
+   
