@@ -42,21 +42,21 @@ class Tile:
     def move(self, dx, dy):
         self.position.translate(dx, dy)
 
-    def draw(self, position, length=1):  # length defaults to 1
+    def draw(self, position, length=1):  # Draw the tile at the specified position with a given length
         # Assign color based on the tile number
         def assign_color(number):
             color_dict = {
-                2: Color(255, 255, 102),  # Açık Sarı
-                4: Color(255, 204, 102),  # Koyu Sarı
-                8: Color(255, 153, 102),  # Açık Turuncu
-                16: Color(255, 102, 102),  # Koyu Turuncu
-                32: Color(255, 51, 102),  # Açık Kırmızı
-                64: Color(204, 51, 153),  # Koyu Kırmızı
-                128: Color(153, 51, 204),  # Açık Mor
-                256: Color(102, 51, 255),  # Koyu Mor
-                512: Color(51, 102, 255),  # Açık Mavi
-                1024: Color(51, 153, 255),  # Koyu Mavi
-                2048: Color(0, 102, 255)  # Açık Lacivert
+                2: Color(255, 255, 102),  # Light Yellow
+                4: Color(255, 204, 102),  # Dark Yellow
+                8: Color(255, 153, 102),  # Light Orange
+                16: Color(255, 102, 102),  # Dark Orange
+                32: Color(255, 51, 102),  # Light Red
+                64: Color(204, 51, 153),  # Dark Red
+                128: Color(153, 51, 204),  # Light Purple
+                256: Color(102, 51, 255),  # Dark Purple
+                512: Color(51, 102, 255),  # Light Blue
+                1024: Color(51, 153, 255),  # Dark Blue
+                2048: Color(0, 102, 255)  # Light Navy
             }
             # Assign black color for numbers larger than 2048
             if number > 2048:
