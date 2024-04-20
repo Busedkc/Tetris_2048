@@ -14,29 +14,44 @@ import random  # used for creating tetrominoes with random types (shapes)
 
 # The main function where this program starts execution
 def start():
-   # set the dimensions of the game grid
-   grid_h, grid_w = 20, 12
-   # set the size of the drawing canvas (the displayed window)
-   canvas_h, canvas_w = 40 * grid_h, 40 * grid_w
-   stddraw.setCanvasSize(canvas_w, canvas_h)
-   # set the scale of the coordinate system for the drawing canvas
-   stddraw.setXscale(-0.5, grid_w - 0.5)
-   stddraw.setYscale(-0.5, grid_h - 0.5)
+    # set the dimensions of the game grid
+    grid_h, grid_w = 20, 12
+    # set the size of the drawing canvas
+    canvas_h, canvas_w = 40 * grid_h, 35 * grid_w
+    stddraw.setCanvasSize((40 * grid_w) + 120, canvas_h)
+    # set the scale of the coordinate system
+    stddraw.setXscale(-0.5, grid_w + 5)
+    stddraw.setYscale(-0.5, grid_h - 0.5)
+    # set the dimension values stored and used in the Tetromino class
+    Tetromino.grid_height = grid_h
+    Tetromino.grid_width = grid_w
+    # create the game grid
+    grid = GameGrid(grid_h, grid_w)
 
-   # set the game grid dimension values stored and used in the Tetromino class
-   Tetromino.grid_height = grid_h
-   Tetromino.grid_width = grid_w
-   # create the game grid
-   grid = GameGrid(grid_h, grid_w)
-   # create the first tetromino to enter the game grid
-   # by using the create_tetromino function defined below
-   current_tetromino = create_tetromino()
-   grid.current_tetromino = current_tetromino
+    # create the first tetromino to enter the game grid
+    # by using the create_tetromino function defined below
+    # current_tetromino = create_tetromino(grid_h, grid_w)
+    # next_tetromino = create_tetromino(grid_h,grid_w)
+    tetro_list1 = create_tetromino(grid_h, grid_w)
+    second_tetro_list2 = create_tetromino(grid_h, grid_w)
+    newList = [tetro_list1, second_tetro_list2]
+    grid.newList = newList
+    current_tetromino = newList[0]
+    grid.current_tetromino = current_tetromino
 
-   # display a simple menu before opening the game
-   # by using the display_game_menu function defined below
-   display_game_menu(grid_h, grid_w)
+    newList.pop(0)
 
+    newList.append(create_tetromino(grid_h, grid_w))
+
+    # display a simple menu before opening the game
+    # by using the display_game_menu function defined below
+    display_game_menu(grid, grid_h, grid_w + 5.6)
+
+    already_dropped = False
+    drop = False
+
+    pause = False
+    # main game loop (keyboard interaction for moving the tetromino)
    # the main game loop
    while True:
       # check for any user interaction via the keyboard
