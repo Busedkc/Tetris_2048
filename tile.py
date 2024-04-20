@@ -14,7 +14,7 @@ class Tile:
    font_family, font_size = "Arial", 14
 
    # A constructor that creates a tile with 2 as the number on it
-       def __init__(self, position=Point(0, 0)):
+    def __init__(self, position=Point(0, 0)):
         # set the number on this tile
         # self.number = random.randint(2, 4)
         # self.number=2
