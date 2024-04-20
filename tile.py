@@ -42,20 +42,37 @@ class Tile:
     def move(self, dx, dy):
         self.position.translate(dx, dy)
 
+    def draw(self, position, length=1):  # length defaults to 1
+        # Assign color based on the tile number
+        def assign_color(number):
+            color_dict = {
+                2: Color(255, 255, 102),  # Açık Sarı
+                4: Color(255, 204, 102),  # Koyu Sarı
+                8: Color(255, 153, 102),  # Açık Turuncu
+                16: Color(255, 102, 102),  # Koyu Turuncu
+                32: Color(255, 51, 102),  # Açık Kırmızı
+                64: Color(204, 51, 153),  # Koyu Kırmızı
+                128: Color(153, 51, 204),  # Açık Mor
+                256: Color(102, 51, 255),  # Koyu Mor
+                512: Color(51, 102, 255),  # Açık Mavi
+                1024: Color(51, 153, 255),  # Koyu Mavi
+                2048: Color(0, 102, 255)  # Açık Lacivert
+            }
+            # Assign black color for numbers larger than 2048
+            if number > 2048:
+                return Color(0, 0, 0)
+            return color_dict.get(number, Color(151, 178, 199))
 
+        # Draw the tile
+        stddraw.setPenColor(assign_color(self.number))  # Assign color based on the number
+        stddraw.filledSquare(position.x, position.y, length / 2)  # Draw filled square
+        stddraw.setPenColor(self.box_color)  # Set pen color for boundary
+        stddraw.setPenRadius(Tile.boundary_thickness)  # Set pen radius for boundary
+        stddraw.square(position.x, position.y, length / 2)  # Draw boundary square
+        stddraw.setPenRadius()  # Reset the pen radius to default value
 
-   # A method for drawing this tile at a given position with a given length
-   def draw(self, position, length=1):  # length defaults to 1
-      # draw the tile as a filled square
-      stddraw.setPenColor(self.background_color)
-      stddraw.filledSquare(position.x, position.y, length / 2)
-      # draw the bounding box around the tile as a square
-      stddraw.setPenColor(self.box_color)
-      stddraw.setPenRadius(Tile.boundary_thickness)
-      stddraw.square(position.x, position.y, length / 2)
-      stddraw.setPenRadius()  # reset the pen radius to its default value
-      # draw the number on the tile
-      stddraw.setPenColor(self.foreground_color)
-      stddraw.setFontFamily(Tile.font_family)
-      stddraw.setFontSize(Tile.font_size)
-      stddraw.text(position.x, position.y, str(self.number))
+        # Draw the number
+        stddraw.setPenColor(self.foreground_color)  # Set pen color for number
+        stddraw.setFontFamily(Tile.font_family)  # Set font family for number
+        stddraw.setFontSize(Tile.font_size)  # Set font size for number
+        stddraw.text(position.x, position.y, str(self.number))  # Draw number on the tile
