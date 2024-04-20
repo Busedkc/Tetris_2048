@@ -11,6 +11,8 @@ class Tetromino:
 
    # A constructor for creating a tetromino with a given shape (type)
    def __init__(self, shape):
+      # set the shape of the tetromino based on the given type
+      self.tetromino_type= shape
       self.type = shape  # set the type of this tetromino
       # determine the occupied (non-empty) cells in the tile matrix based on
       # the shape of this tetromino (see the documentation given with this code)
@@ -123,6 +125,30 @@ class Tetromino:
       else:  # direction == "down"
          self.bottom_left_cell.y -= 1
       return True  # a successful move in the given direction
+
+       def rotate_clockwise(self):
+        n = len(self.tile_matrix)
+        # Create a copy of the current tile matrix
+        rotated_matrix = np.full((n, n), None)
+        # Perform rotation
+        for row in range(n):
+            for col in range(n):
+                rotated_matrix[col][n - 1 - row] = self.tile_matrix[row][col]
+        # Update the tile matrix with the rotated one
+        self.tile_matrix = rotated_matrix
+
+        # A method to rotate the tetromino counterclockwise
+
+    def rotate_counterclockwise(self):
+        n = len(self.tile_matrix)
+        # Create a copy of the current tile matrix
+        rotated_matrix = np.full((n, n), None)
+        # Perform rotation
+        for row in range(n):
+            for col in range(n):
+                rotated_matrix[n - 1 - col][row] = self.tile_matrix[row][col]
+        # Update the tile matrix with the rotated one
+        self.tile_matrix = rotated_matrix
 
    # A method for checking if this tetromino can be moved in a given direction
    def can_be_moved(self, direction, game_grid):
