@@ -19,4 +19,3 @@ class Point:
    # Overloaded __str__ method (automatically invoked when printing a point)
    def __str__(self):
       return "(" + str(self.x) + ", " + str(self.y) + ")"
-
