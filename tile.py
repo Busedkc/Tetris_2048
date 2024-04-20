@@ -1,5 +1,8 @@
 import lib.stddraw as stddraw  # used for drawing the tiles to display them
 from lib.color import Color  # used for coloring the tiles
+import random  # used for creating tetrominoes with random types/shapes
+import copy as cp
+from point import Point
 
 # A class for modeling numbered tiles as in 2048
 class Tile:
@@ -11,13 +14,35 @@ class Tile:
    font_family, font_size = "Arial", 14
 
    # A constructor that creates a tile with 2 as the number on it
-   def __init__(self):
-      # set the number on this tile
-      self.number = 2
-      # set the colors of this tile
-      self.background_color = Color(151, 178, 199)  # background (tile) color
-      self.foreground_color = Color(0, 100, 200)  # foreground (number) color
-      self.box_color = Color(0, 100, 200)  # box (boundary) color
+       def __init__(self, position=Point(0, 0)):
+        # set the number on this tile
+        # self.number = random.randint(2, 4)
+        # self.number=2
+        initial_list = [2, 4]
+        self.number = random.choice(initial_list)
+        # set the color of this tile
+        self.foreground_color = Color(113, 121, 126)  # foreground (number) color yazının rengi
+        self.box_color = Color(158, 138, 120)  # box (boundary) color çerçeve rengi
+        self.position = Point(position.x, position.y) # set the position of the tile as the given position
+
+    def double(self):
+        self.number *= 2
+
+
+    def set_position(self, position):
+        # set the position of the tile as the given position
+        self.position = cp.copy(position)
+
+    # Getter method for the position of the tile
+    def get_position(self):
+        # return the position of the tile
+        return cp.copy(self.position)
+
+    # Method for moving the tile by dx along the x axis and by dy along the y axis
+    def move(self, dx, dy):
+        self.position.translate(dx, dy)
+
+
 
    # A method for drawing this tile at a given position with a given length
    def draw(self, position, length=1):  # length defaults to 1
