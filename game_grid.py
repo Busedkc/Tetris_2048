@@ -181,5 +181,17 @@ class GameGrid:
       # return the value of the game_over flag
       return self.game_over
 
+    def check_grid(self):
+        for row in range(self.grid_width):
+            if None not in self.tile_matrix[row]:
+                self.delete_row(row)
+                self.move_row(row)
+                self.check_grid()
+
+    def clear(self):
+        empty_rows = [i for i, row in enumerate(self.tile_matrix) if None not in row]
+        self.tile_matrix = np.delete(self.tile_matrix, empty_rows, axis=0)
+        for _ in empty_rows:
+            self.tile_matrix = np.append(self.tile_matrix, np.full((1, self.grid_width), None), axis=0)
 
    
