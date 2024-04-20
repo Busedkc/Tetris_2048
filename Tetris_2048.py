@@ -175,37 +175,61 @@ def show_gameOver(grid_height, grid_width):
         stddraw.show(50)
 
 
-# A function for displaying a simple menu before starting the game
-def display_game_menu(grid_height, grid_width):
-   # the colors used for the menu
-   background_color = Color(42, 69, 99)
-   button_color = Color(25, 255, 228)
-   text_color = Color(31, 160, 239)
-   # clear the background drawing canvas to background_color
-   stddraw.clear(background_color)
-   # get the directory in which this python code file is placed
-   current_dir = os.path.dirname(os.path.realpath(__file__))
-   # compute the path of the image file
-   img_file = current_dir + "/images/menu_image.png"
-   # the coordinates to display the image centered horizontally
-   img_center_x, img_center_y = (grid_width - 1) / 2, grid_height - 7
-   # the image is modeled by using the Picture class
-   image_to_display = Picture(img_file)
-   # add the image to the drawing canvas
-   stddraw.picture(image_to_display, img_center_x, img_center_y)
-   # the dimensions for the start game button
-   button_w, button_h = grid_width - 1.5, 2
-   # the coordinates of the bottom left corner for the start game button
-   button_blc_x, button_blc_y = img_center_x - button_w / 2, 4
-   # add the start game button as a filled rectangle
-   stddraw.setPenColor(button_color)
-   stddraw.filledRectangle(button_blc_x, button_blc_y, button_w, button_h)
-   # add the text on the start game button
-   stddraw.setFontFamily("Arial")
-   stddraw.setFontSize(25)
-   stddraw.setPenColor(text_color)
-   text_to_display = "Click Here to Start the Game"
-   stddraw.text(img_center_x, 5, text_to_display)
+def display_game_menu(grid, grid_height, grid_width):
+    # colors used for the menu
+    background_color = Color(200, 162, 200)
+    button_color_easy = Color(130, 210, 165)  # Yeşil tonunda
+    button_color_medium = Color(255, 220, 115)  # Sarı tonunda
+    button_color_hard = Color(255, 150, 150)  # Kırmızı tonunda
+    text_color = Color(200, 162, 200)
+    # clear the background canvas to background_color
+    stddraw.clear(background_color)
+    # get the directory in which this python code file is placed
+    current_dir = os.path.dirname(os.path.realpath(_file_))
+    # path of the image file
+    img_file = current_dir + "/images/menu_image.png"
+    # center coordinates to display the image
+    img_center_x, img_center_y = (grid_width - 1) / 2, grid_height - 7
+    # image is represented using the Picture class
+    image_to_display = Picture(img_file)
+    # display the image
+    stddraw.picture(image_to_display, img_center_x, img_center_y)
+    # dimensions of the start game button
+    button_w, button_h = grid_width - 1.5, 2
+    # coordinates of the bottom left corner of the start game button
+    button_blc_x, button_blc_y = img_center_x - button_w / 2, 4
+    # display the start game button as a filled rectangle
+    stddraw.setPenColor(text_color)
+    # display the text on the start game button
+    stddraw.setFontFamily("Times New Roman")
+    stddraw.setFontSize(35)
+    stddraw.setPenColor(stddraw.WHITE)
+    text_to_display = "Choose Level and Start Game"
+    stddraw.text(img_center_x, 7, text_to_display)
+    # Easy
+    stddraw.setPenColor(button_color_easy)
+    stddraw.filledRectangle(button_blc_x, button_blc_y, button_w / 3, button_h)
+    stddraw.setFontFamily("Times New Roman")
+    stddraw.setFontSize(25)
+    stddraw.setPenColor(stddraw.BLACK)
+    text_to_display1 = "easy"
+    stddraw.text(2.7, 5, text_to_display1)
+    # Medium
+    stddraw.setPenColor(button_color_medium)
+    stddraw.filledRectangle(5.25, button_blc_y, button_w / 3, button_h)
+    stddraw.setFontFamily("Times New Roman")
+    stddraw.setFontSize(25)
+    stddraw.setPenColor(stddraw.BLACK)
+    text_to_display2 = "medium"
+    stddraw.text(7.75, 5, text_to_display2)
+    # Hard
+    stddraw.setPenColor(button_color_hard)
+    stddraw.filledRectangle(10.2, button_blc_y, button_w / 3, button_h)
+    stddraw.setFontFamily("Times New Roman")
+    stddraw.setFontSize(25)
+    stddraw.setPenColor(stddraw.BLACK)
+    text_to_display3 = "hard"
+    stddraw.text(12.75, 5, text_to_display3)
    # the user interaction loop for the simple menu
    while True:
       # display the menu and wait for a short time (50 ms)
@@ -216,10 +240,17 @@ def display_game_menu(grid_height, grid_width):
          # has been left-clicked
          mouse_x, mouse_y = stddraw.mouseX(), stddraw.mouseY()
          # check if these coordinates are inside the button
-         if mouse_x >= button_blc_x and mouse_x <= button_blc_x + button_w:
-            if mouse_y >= button_blc_y and mouse_y <= button_blc_y + button_h:
-               break  # break the loop to end the method and start the game
-
+         if mouse_x >= button_blc_x and mouse_x <= button_blc_x + button_w / 3:
+                if mouse_y >= button_blc_y and mouse_y <= button_blc_y + button_h:
+                    grid.slower()
+                    break  # break the loop to end the method and start the game
+            if mouse_x >= 5.25 and mouse_x <= 5.25 + button_w / 3:
+                if mouse_y >= button_blc_y and mouse_y <= button_blc_y + button_h:
+                    break
+            if mouse_x >= 10.2 and mouse_x <= 10.2 + button_w / 3:
+                if mouse_y >= button_blc_y and mouse_y <= button_blc_y + button_h:
+                    grid.faster()
+                    break
 
 # start() function is specified as the entry point (main function) from which
 # the program starts execution
