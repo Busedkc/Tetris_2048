@@ -220,6 +220,9 @@ class Tetromino:
                   if leftmost.x == 0:
                      return False  # this tetromino cannot be moved left
                   # if the grid cell on the left of a leftmost tile is occupied
+                  if leftmost.y >= self.grid_height:
+                     break
+                  # if the grid cell on the left of a leftmost tile is occupied
                   if game_grid.is_occupied(leftmost.y, leftmost.x - 1):
                      return False  # this tetromino cannot be moved left
                   # as the leftmost tile of the current row is checked
@@ -233,6 +236,8 @@ class Tetromino:
                   if rightmost.x == Tetromino.grid_width - 1:
                      return False  # this tetromino cannot be moved right
                   # if the grid cell on the right of a rightmost tile is occupied
+                  if rightmost.y >= self.grid_height:
+                     break
                   if game_grid.is_occupied(rightmost.y, rightmost.x + 1):
                      return False  # this tetromino cannot be moved right
                   # as the rightmost tile of the current row is checked
@@ -245,6 +250,8 @@ class Tetromino:
                if self.tile_matrix[row][col] is not None:
                   # the position of the bottommost tile of the current col
                   bottommost = self.get_cell_position(row, col)
+                  if bottommost.y > self.grid_height:
+                     break
                   # if any bottommost tile is at y = 0
                   if bottommost.y == 0:
                      return False  # this tetromino cannot be moved down
@@ -255,4 +262,3 @@ class Tetromino:
                   break  # end the inner for loop
       # if this method does not end by returning False before this line
       return True  # this tetromino can be moved in the given direction
-
